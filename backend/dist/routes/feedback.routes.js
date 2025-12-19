@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const feedback_controller_1 = require("../controllers/feedback.controller");
+const notes_controller_1 = require("../controllers/notes.controller");
+const tags_controller_1 = require("../controllers/tags.controller");
+const router = (0, express_1.Router)();
+router.post("/:id/notes", notes_controller_1.addNote);
+router.post("/:id/tags", tags_controller_1.addTag);
+router.delete("/:id/tags/:tagId", tags_controller_1.removeTag);
+router.get("/", feedback_controller_1.getFeedbackInbox);
+router.get("/:id", feedback_controller_1.getFeedbackById);
+exports.default = router;
