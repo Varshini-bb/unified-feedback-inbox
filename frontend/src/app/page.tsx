@@ -3,6 +3,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { useState } from "react";
+import FeedbackDrawer from "@/components/FeedbackDrawer";
+
 
 type Feedback = {
   id: string;
@@ -15,6 +17,7 @@ type Feedback = {
 export default function InboxPage() {
   const [source, setSource] = useState("");
   const [severity, setSeverity] = useState("");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const { data, isLoading } = useQuery({
     queryKey: ["feedback", source, severity],
@@ -72,7 +75,8 @@ export default function InboxPage() {
         {data.data.map((item: Feedback) => (
           <li
             key={item.id}
-            className="border p-4 rounded hover:bg-gray-50"
+            onClick={() => setSelectedId(item.id)}
+            className="border p-4 rounded hover:bg-gray-50 cursor-pointer"
           >
             <div className="flex justify-between">
               <h2 className="font-semibold">{item.title}</h2>
@@ -86,6 +90,10 @@ export default function InboxPage() {
           </li>
         ))}
       </ul>
+      <FeedbackDrawer
+        feedbackId={selectedId}
+        onClose={() => setSelectedId(null)}
+      />
     </main>
   );
 }
