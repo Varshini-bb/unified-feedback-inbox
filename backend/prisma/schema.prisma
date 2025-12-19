@@ -8,21 +8,19 @@ generator client {
 }
 
 model FeedbackItem {
-  id          String   @id @default(uuid())
+  id          String        @id @default(uuid())
   source      String
   sourceId    String
   title       String
   description String
   severity    String
   productArea String
-  createdAt   DateTime @default(now())
+  createdAt   DateTime      @default(now())
 
   notes       FeedbackNote[]
-
-  @@index([createdAt])
-  @@index([severity])
-  @@index([productArea])
+  tags        FeedbackTag[]  
 }
+
 
 model FeedbackNote {
   id          String   @id @default(uuid())
@@ -32,3 +30,40 @@ model FeedbackNote {
 
   feedback    FeedbackItem @relation(fields: [feedbackId], references: [id], onDelete: Cascade)
 }
+
+model FeedbackTag {
+  id         String   @id @default(uuid())
+  name       String
+  feedbackId String
+
+  feedback   FeedbackItem @relation(fields: [feedbackId], references: [id], onDelete: Cascade)
+
+  @@unique([feedbackId, name])
+}
+
+model FeedbackForm {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  severity    String
+  productArea String
+  createdAt   DateTime @default(now())
+}
+
+model SupportTicket {
+  id          String   @id @default(uuid())
+  subject     String
+  body        String
+  priority    String
+  productArea String
+  createdAt   DateTime @default(now())
+}
+
+model SalesNote {
+  id          String   @id @default(uuid())
+  note        String
+  urgency     String
+  productArea String
+  createdAt   DateTime @default(now())
+}
+
