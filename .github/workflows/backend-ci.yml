@@ -1,6 +1,7 @@
 name: Backend CI
 
 on:
+  workflow_dispatch:   # 👈 THIS IS THE KEY LINE
   push:
     paths:
       - "backend/**"
@@ -9,7 +10,6 @@ on:
     paths:
       - "backend/**"
       - ".github/workflows/**"
-
 
 jobs:
   build:
