@@ -2,9 +2,9 @@ import { Router } from "express";
 import {
   getFeedbackInbox,
   getFeedbackById,
-} from "../controllers/feedback.controller";
-import { addNote } from "../controllers/notes.controller";
-import { addTag, removeTag } from "../controllers/tags.controller";
+} from "../controllers/feedback.controller.js";
+import { addNote } from "../controllers/notes.controller.js";
+import { addTag, removeTag } from "../controllers/tags.controller.js";
 
 const router = Router();
 

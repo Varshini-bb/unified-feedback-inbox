@@ -1,8 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const prisma_1 = require("../prisma");
+import { prisma } from "../prisma.js";
 async function seedSources() {
-    await prisma_1.prisma.feedbackForm.createMany({
+    await prisma.feedbackForm.createMany({
         data: [
             {
                 title: "Signup flow is confusing",
@@ -12,7 +10,7 @@ async function seedSources() {
             },
         ],
     });
-    await prisma_1.prisma.supportTicket.createMany({
+    await prisma.supportTicket.createMany({
         data: [
             {
                 subject: "Login not working",
@@ -22,7 +20,7 @@ async function seedSources() {
             },
         ],
     });
-    await prisma_1.prisma.salesNote.createMany({
+    await prisma.salesNote.createMany({
         data: [
             {
                 note: "Customer requesting bulk pricing",
@@ -35,4 +33,4 @@ async function seedSources() {
 }
 seedSources()
     .catch(console.error)
-    .finally(() => prisma_1.prisma.$disconnect());
+    .finally(() => prisma.$disconnect());

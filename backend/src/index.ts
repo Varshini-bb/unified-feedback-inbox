@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import feedbackRoutes from "./routes/feedback.routes";
+import feedbackRoutes from "./routes/feedback.routes.js";
 
 const app = express();
 

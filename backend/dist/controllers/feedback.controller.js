@@ -1,16 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getFeedbackById = exports.getFeedbackInbox = void 0;
-const prisma_1 = require("../prisma");
+import { prisma } from "../prisma.js";
 /**
  * GET /api/feedback
  * Filters: source, severity, productArea
  * Pagination: limit, offset
  */
-const getFeedbackInbox = async (req, res) => {
+export const getFeedbackInbox = async (req, res) => {
     try {
         const { source, severity, productArea, limit = "10", offset = "0", } = req.query;
-        const feedback = await prisma_1.prisma.feedbackItem.findMany({
+        const feedback = await prisma.feedbackItem.findMany({
             where: {
                 source: source ? String(source) : undefined,
                 severity: severity ? String(severity) : undefined,
@@ -20,7 +17,7 @@ const getFeedbackInbox = async (req, res) => {
             take: Number(limit),
             skip: Number(offset),
         });
-        const total = await prisma_1.prisma.feedbackItem.count();
+        const total = await prisma.feedbackItem.count();
         res.json({
             data: feedback,
             pagination: {
@@ -35,14 +32,13 @@ const getFeedbackInbox = async (req, res) => {
         res.status(500).json({ message: "Failed to fetch feedback inbox" });
     }
 };
-exports.getFeedbackInbox = getFeedbackInbox;
 /**
  * GET /api/feedback/:id
  */
-const getFeedbackById = async (req, res) => {
+export const getFeedbackById = async (req, res) => {
     try {
         const { id } = req.params;
-        const feedback = await prisma_1.prisma.feedbackItem.findUnique({
+        const feedback = await prisma.feedbackItem.findUnique({
             where: { id },
             include: {
                 notes: true,
@@ -58,4 +54,3 @@ const getFeedbackById = async (req, res) => {
         res.status(500).json({ message: "Failed to fetch feedback item" });
     }
 };
-exports.getFeedbackById = getFeedbackById;

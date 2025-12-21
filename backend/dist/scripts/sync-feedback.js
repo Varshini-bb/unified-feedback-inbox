@@ -1,12 +1,10 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const prisma_1 = require("../prisma");
+import { prisma } from "../prisma.js";
 async function syncFeedback() {
-    const forms = await prisma_1.prisma.feedbackForm.findMany();
-    const tickets = await prisma_1.prisma.supportTicket.findMany();
-    const sales = await prisma_1.prisma.salesNote.findMany();
+    const forms = await prisma.feedbackForm.findMany();
+    const tickets = await prisma.supportTicket.findMany();
+    const sales = await prisma.salesNote.findMany();
     for (const f of forms) {
-        await prisma_1.prisma.feedbackItem.create({
+        await prisma.feedbackItem.create({
             data: {
                 source: "form",
                 sourceId: f.id,
@@ -18,7 +16,7 @@ async function syncFeedback() {
         });
     }
     for (const t of tickets) {
-        await prisma_1.prisma.feedbackItem.create({
+        await prisma.feedbackItem.create({
             data: {
                 source: "support",
                 sourceId: t.id,
@@ -30,7 +28,7 @@ async function syncFeedback() {
         });
     }
     for (const s of sales) {
-        await prisma_1.prisma.feedbackItem.create({
+        await prisma.feedbackItem.create({
             data: {
                 source: "sales",
                 sourceId: s.id,
@@ -45,4 +43,4 @@ async function syncFeedback() {
 }
 syncFeedback()
     .catch(console.error)
-    .finally(() => prisma_1.prisma.$disconnect());
+    .finally(() => prisma.$disconnect());

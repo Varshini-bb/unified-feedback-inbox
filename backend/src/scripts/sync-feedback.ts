@@ -1,4 +1,4 @@
-import { prisma } from "../prisma";
+import { prisma } from "../prisma.js";
 
 async function syncFeedback() {
   const forms = await prisma.feedbackForm.findMany();
